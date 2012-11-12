@@ -13,7 +13,8 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+		<!--<link rel="stylesheet" href="css/theme/default.css" id="theme">-->
+		<link rel="stylesheet" href="css/theme/kantega.css" id="theme">
 
 		<!-- For syntax highlighting -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -22,8 +23,8 @@
 		<script>
 			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
 		</script>
-		
-		<link rel="stylesheet" href="css/kantega.css" id="theme">
+
+		<link rel="stylesheet" href="css/kantega.css">
 
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
@@ -38,26 +39,243 @@
 			<div class="slides">
 
 				<section>
-					<h1>guava-libraries</h1>
-					<h3>Google Core Libraries for java.</h3>
+					<h1>Guava</h1>
+					<h3>Google Core Libraries for java</h3>
+					<br/>
+					<p>+ historietime: <code>null</code></p>
+					<br/>
 					<p>
-						<small>André Lindhjem, Kantega</small>
+						André Lindhjem<br/>
+						Kantega
 					</p>
 				</section>
 
 				<section>
-					<h2>Links</h2>
+					<h3>
+						Google java-biblioteker
+					</h3>
+					<q>collections, caching, primitives support, concurrency libraries, common annotations, string processing, I/O . .</q>
+					<p>&nbsp;</p>
 					<p>
-						<ul>
-						<li>guava-libraries: </li>
-						<li>null references</li>
-						</ul>
+						Biblioteker som Google bruker for å gjøre Java litt enklere å leve med.
 					</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
+					<aside class="notes"></aside>
 				</section>
+
+				<!-- section data-markdown>
+					<script type="text/template">
+						## Bruk av `null`
+						* `null` er ubehagelig på mange måter.
+						* Årsaken til veldig mange bugs.
+					</script>
+				</section -->
+
+				<section>
+					<section>
+						<h2>Sir Charles Antony Richard Hoare</h2>
+						<img src="img/Sir_Tony_Hoare_IMG_5125.jpg" />
+					</section>
+
+					<!-- section>
+						<h2>Sir Charles Antony Richard Hoare</h2>
+						<ul>
+							<li>Ridder</li>
+							<li>Quicksort</li>
+							<li>Hoare logic ()</li>
+							<li>Priser fra ACM, Royal Society, IEEE</li>
+							<li>+ +  +</li>
+						</ul>
+					</section -->
+
+					<section>
+<!--						<h2>Sir Charles Antony Richard Hoare</h2>-->
+						<h3>typesystemet i ALGOL W</h3>
+						<small>
+							<blockquote>I call it my billion-dollar mistake. It was the invention of the null reference in 1965.<br/>
+								[...]<br/>
+								But I couldn't resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.
+							</blockquote>
+						</small>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>null i Java</h3>
+						<ul>
+							<!--<li>Ønsker vanligvis ikke <code>null</code> i collections (95%).</li>-->
+							<aside class="notes">Da ønsker vi "fail fast" istedet for at det smeller senere. DB-problematikk... Haskey()..</aside>
+							<li><code>null</code> er vag: Kan bety feil/suksess/whatever.</li>
+							<li>Punkterer typesystemet. <code>T</code> betyr <strong>alltid</strong> <q>T eller null</q>.</li>
+							<aside class="notes">union type / sum type</aside>
+							<li>Oppmuntrer til <code>if (var != null)</code></li>
+							<aside class="notes">Ofte kan essensen forsvinne i null-sjekking.</aside>
+							<li>Collections tillater null-verdier</li>
+							<aside class="notes">HashMap.put("something", null);</aside>
+							<li>Collections returerner null ved manglende verdi.</li>
+							<aside class="notes">map.get("something"); .. må bruke containsKey().</aside>
+							<li>Årsak til mange feil . . </li>
+						</ul>
+					</section>
+
+					<section>
+						<h3>"top ten java errors"</h3>
+						<blockquote>(drum roll)<br/>
+							<br/>
+							And the number one error that Java programmers make !!!!!<br/>
+							<br/>
+							1. Null pointers!<br/>
+							<br/>
+							Null pointers are one of the most common errors that Java programmers make. Compilers can't check this one for you - it will only surface at runtime, and if you don't discover it, your users certainly will.
+						</blockquote>
+						<aside class="notes">For å ikke snakke om andre programmeringsspråk (C).</aside>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							## Tiltak
+
+							En (blanding?) av:
+
+							* Regler / standarder
+							* Javadoc
+							* Tester
+							* Findbugs
+							* Annoteringer
+						</script>
+					</section>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Guava collections.
+
+						<q>Living with null-hostile collections</q>
+
+						Mange collections tillater ikke `null`-verdier (feks: `immutable`-versjoner av `Set`, `Map`, `List`).
+					</script>
+				</section>
+
+				<section>
+					<!-- section data-markdown>
+						<script type="text/template">
+							## Nye collection-typer
+
+							Nye collections for vanlige problemer: `Multiset`, `Multimap`, `BiMap`, `Table`, `ClassToInstanceMap`.
+						</script>
+					</section -->
+
+					<section>
+						<h2>Flere collections</h2>
+						<ul>
+							<li class="fragment grow"><code>Multiset</code></li>
+							<li><code>Multimap</code></li>
+							<li><code>ClassToInstanceMap</code></li>
+							<li><code>BiMap</code></li>
+							<li><code>Table</code></li>
+							<li><code>osv . .</code></li>
+						</ul>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							## Telle antall forekomster
+
+							Vanlig problem å komme borti.
+
+								Map<String, Integer> forekomster = new HashMap<String, Integer>();
+								for (String ord : alleOrd) {
+									Integer antall = forekomster.get(ord);
+									if (antall == null) {
+										forekomster.put(ord, 1);
+									} else {
+										forekomster.put(ord, antall + 1):
+									}
+								}
+						</script>
+					</section>
+
+					<section data-markdown>
+						<script type="text/template">
+							## Guava-måten
+
+							Slik gjør vi det med `MultiSet`.
+
+								MultiSet<String> ordSett = HashMultiset.create();
+								ordSett.addAll(alleOrd);
+								// ordSett.count("sykkel"); antall som "int".
+						</script>
+						<asside class="notes">Alternativt, send med alleOrd i factory-metode. Factory-metoder lar oss slippe å gjenta generics.</asside>
+					</section>
+				</section>
+
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							## Optional&lt;T&gt;
+
+							* `Optional` brukes der vi i dag bruker `null` for å indikere fravær av verdi.
+							* Idiot-sikring - utvikler må aktivt ta stilling til at en `Optional` kan ha "fravær av verdi".
+							<aside class="notes">Erfaringer fra feks Scala - NPE forekommer skjeldent.</aside>
+							* Erfaringer fra språk med liknende typer er at problemer rundt `null` nesten ikke forekommer.
+							<aside class="notes">Option i Scala, Maybe i Haskell</aside>
+						</script>3
+					</section>
+
+					<section>
+						<h2>Optional&lt;T&gt;</h2>
+						<p>Med verdi.</p>
+						<pre><code contenteditable>Optional&lt;Integer&gt; kanskje = Optional.of(5);
+kanskje.isPresent(); // true
+kanskje.get(); // returnerer 5</code></pre>
+
+						<p>Fravær av verdi.</p>
+						<pre><code contenteditable>Optional&lt;Integer&gt; kanskje = Optional.absent(); // tom verdi
+kanskje.isPresent(); // false
+kanskje.or(6); // returnerer 6
+kanskje.asSet(); // returnerer et tomt sett.
+kanskje.get(); // IllegalStateException!</code></pre>
+
+					</section>
+
+					<!-- section>
+						<h2>Brukes</h2>
+						<p>Lage</p>
+						<pre><code contenteditable>Optional.of(5); // Med verdi
+Optional.absent(); // Fravær av verdi
+Optional.fromNullable(var);</code></pre>
+
+						<p>Undersøke</p>
+						<pre><code contenteditable>boolean isPresent()
+T get()
+T or(T)
+T orNull()
+Set&lt;T&gt; asSet()</code></pre>
+					</section -->
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## Generelt om guava
+
+						Ikke rocket science, men:
+
+						* Mange brukere.
+						* *Mye* vekt på API-design.
+						* Brukes i "inner loop"-tilfeller.
+					</script>
+				</section>
+
+				<section>
+					<h2>Lenker</h2>
+						<ul>
+							<li><a href="http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare">The Billion Dollar Mistake</a></li>
+							<li><a href="https://code.google.com/p/guava-libraries/">guava-libraries</a></li>
+							<li><a href="https://code.google.com/p/guava-libraries/wiki/LivingWithNullHostileCollections">Living With Null Hostile Collections</a></li>
+							<li>Annet? Spør meg!</li>
+						</ul>
+				</section>
+
 
 			</div>
 
