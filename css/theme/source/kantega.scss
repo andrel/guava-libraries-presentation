@@ -51,6 +51,7 @@ $linkColor: #000099;
 $linkColorHover: lighten( $linkColor, 20% );
 $selectionBackgroundColor: #134674;
 
+$backgroundColor: $green;
 
 // Background generator
 @mixin bodyBackground() {

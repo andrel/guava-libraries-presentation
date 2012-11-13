@@ -23,7 +23,14 @@ body {
 	padding: 0;
 	float: none !important;
 	overflow: visible;
-	background-image: none;
+	/*background-image: none;*/
+
+    background: url("../../img/lys_1.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-color: #146478;
 }
 
 html {
